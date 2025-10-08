@@ -1,16 +1,17 @@
-# This is a sample Python script.
+import os
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+print("=== Hand Gesture Control ===")
+print("1️⃣ Zbierz dane (save_landmarks.py)")
+print("2️⃣ Wytrenuj model (train_model.py)")
+print("3️⃣ Uruchom sterowanie (real_time_control.py)")
 
+choice = input("Wybierz opcję [1/2/3]: ")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if choice == "1":
+    os.system("python save_landmarks.py")
+elif choice == "2":
+    os.system("python train_model.py")
+elif choice == "3":
+    os.system("python real_time_control.py")
+else:
+    print("Niepoprawny wybór.")
