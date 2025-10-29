@@ -14,4 +14,4 @@ elif choice == "2":
 elif choice == "3":
     os.system("python real_time_control.py")
 else:
-    print("Niepoprawny wybór.")
+    print("Niepoprawny wybór")

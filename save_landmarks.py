@@ -45,7 +45,7 @@ while True:
         for handLms in results.multi_hand_landmarks:
             mp_draw.draw_landmarks(frame, handLms, mp_hands.HAND_CONNECTIONS)
 
-    cv2.imshow("Collecting Data", frame)
+    cv2.imshow("Zbieranie Danych", frame)
     key = cv2.waitKey(1) & 0xFF
 
     if key == ord('q'):
