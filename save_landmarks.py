@@ -30,7 +30,7 @@ if not os.path.exists(csv_path):
 
 # Kamera
 cap = cv2.VideoCapture(0)
-print("Naciśnij klawisz 0=open, 1=fist, 2=like, 3=ok, Q=wyjście.")
+print("naciśnij klawisz 0=open, 1=fist, 2=like, 3=ok, Q=wyjście.")
 
 while True:
     ret, frame = cap.read()
