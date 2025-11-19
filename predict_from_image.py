@@ -1,7 +1,8 @@
 import cv2
 import mediapipe as mp
 import numpy as np
-from tensorflow.keras.models import load_model
+from tensorflow.python.keras.models import load_model
+
 
 MODEL_FILE = "model.h5"
 LABELS_FILE = "labels.npy"
