@@ -1,17 +1,15 @@
-import os
-
-print("=== Hand Gesture Control ===")
-print("1️⃣ Zbierz dane (save_landmarks.py)")
-print("2️⃣ Wytrenuj model (train_model.py)")
-print("3️⃣ Uruchom sterowanie (real_time_control.py)")
+print("=== Hand Gesture Recognition (Images) ===")
+print("1️⃣ Ekstrakcja landmarków z dataset/")
+print("2️⃣ Trening modelu")
+print("3️⃣ Rozpoznanie gestu ze zdjęcia")
 
 choice = input("Wybierz opcję [1/2/3]: ")
 
 if choice == "1":
-    os.system("python save_landmarks.py")
+    import extract_from_images
 elif choice == "2":
-    os.system("python train_model.py")
+    import train_model
 elif choice == "3":
-    os.system("python real_time_control.py")
+    import predict_from_image
 else:
     print("Niepoprawny wybór")

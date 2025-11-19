@@ -1,47 +1,37 @@
-import numpy as np
 import pandas as pd
-import tensorflow as tf
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-import os
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.models import Sequential
+from tensorflow. keras.layers import Dense
+import numpy as np
 
-# Wczytanie danych
-data_path = "data_landmarks/landmarks.csv"
-data = pd.read_csv(data_path)
+DATA_FILE = "data.csv"
+MODEL_FILE = "model.h5"
+LABELS_FILE = "labels.npy"
 
-# Etykiety i dane
-X = data.drop("label", axis=1).values
-y = data["label"].values
+df = pd.read_csv(DATA_FILE)
 
-# Kodowanie etykiet
-le = LabelEncoder()
-y_encoded = le.fit_transform(y)
+X = df.drop("label", axis=1).values
+y = df["label"].values
 
-# Podział na zbiory treningowy i testowy
-X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2, random_state=42)
+encoder = LabelEncoder()
+y_encoded = encoder.fit_transform(y)
 
-# Tworzenie modelu
-model = tf.keras.models.Sequential([
-    tf.keras.layers.Input(shape=(63,)),   # 21 punktów * 3 współrzędne
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dense(64, activation='relu'),
-    tf.keras.layers.Dense(len(np.unique(y_encoded)), activation='softmax')
+np.save(LABELS_FILE, encoder.classes_)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y_encoded, test_size=0.2, shuffle=True
+)
+
+model = Sequential([
+    Dense(128, activation="relu", input_shape=(63,)),
+    Dense(64, activation="relu"),
+    Dense(len(encoder.classes_), activation="softmax")
 ])
 
-model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 
-# Trenowanie
-print("🔄 Trenowanie modelu...")
-history = model.fit(X_train, y_train, epochs=20, validation_data=(X_test, y_test))
+model.fit(X_train, y_train, epochs=20, validation_data=(X_test, y_test))
 
-# Ocena
-loss, acc = model.evaluate(X_test, y_test)
-print(f"✅ Dokładność: {acc*100:.2f}%")
-
-# Zapis modelu
-os.makedirs("models", exist_ok=True)
-model.save("models/gesture_model.h5")
-np.save("models/labels.npy", le.classes_)
-print("💾 Model zapisany do folderu models/")
+model.save(MODEL_FILE)
+print("✔ Model zapisany jako", MODEL_FILE)
